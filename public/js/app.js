@@ -1685,44 +1685,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.loading = true;
             axios.post('http://localhost/lv/riset/socmed/public/friendships/request/' + this.current_user_id + '/' + this.profile_user_id).then(function (r) {
                 if (r.data.status == 'waiting') _this2.status = r.data.status;
-                // noty({
-                //     type: 'success',
-                //     layout: 'bottomLeft',
-                //     text: 'Friend request sent .'
-                // })
                 _this2.loading = false;
             });
             this.loading = false;
         },
         accept_friend: function accept_friend() {
+            var _this3 = this;
+
             this.loading = true;
-            // this.$http.get('/accept_friend/' + this.profile_user_id )
-            //     .then( (r) => {
-            //         if(r.body == 1)
-            //             this.status = 'friends'
-            //             noty({
-            //                 type: 'success',
-            //                 layout: 'bottomLeft',
-            //                 text: 'You are now friend. Go ahead and hangout .'
-            //             })
-            //             this.loading = false
-            //     })
+            axios.post('http://localhost/lv/riset/socmed/public/friendships/accept/' + this.current_user_id + '/' + this.profile_user_id).then(function (r) {
+                if (r.data.status == 'friends') _this3.status = 'friends';
+                _this3.loading = false;
+            });
             this.loading = false;
         },
         remove_friend: function remove_friend() {
+            var _this4 = this;
+
             this.loading = true;
-            this.status = '0';
-            // this.$http.get('/accept_friend/' + this.profile_user_id )
-            //     .then( (r) => {
-            //         if(r.body == 1)
-            //             this.status = 'friends'
-            //             noty({
-            //                 type: 'success',
-            //                 layout: 'bottomLeft',
-            //                 text: 'You are now friend. Go ahead and hangout .'
-            //             })
-            //             this.loading = false
-            //     })
+            axios.post('http://localhost/lv/riset/socmed/public/friendships/remove/' + this.current_user_id + '/' + this.profile_user_id).then(function (r) {
+                if (r.data.status == 0) _this4.status = 0;
+                _this4.loading = false;
+            });
             this.loading = false;
         }
     }

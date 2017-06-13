@@ -30,4 +30,13 @@ class FriendshipsController extends Controller
 
         return ['status' => 'waiting'];
     }
+
+    public function accept($currentUserId, $friendUserId)
+    {
+        $currentUser = User::findOrFail($currentUserId);
+        $friendUser = User::findOrFail($friendUserId);
+        $currentUser->accept($friendUser);
+
+        return ['status' => 'friends'];
+    }
 }

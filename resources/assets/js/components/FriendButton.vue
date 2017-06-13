@@ -36,6 +36,12 @@
                     .then( (r) => {
                         if(r.data.status == 'waiting')
                             this.status = r.data.status
+                            noty({
+                                type: 'information',
+                                layout: 'bottomLeft',
+                                text: 'Friend request sent .',
+                                timeout: 3000
+                            })
                             this.loading = false
                     })
                 this.loading = false
@@ -46,6 +52,12 @@
                     .then( (r) => {
                         if(r.data.status == 'friends')
                             this.status = 'friends'
+                            noty({
+                                type: 'success',
+                                layout: 'bottomLeft',
+                                text: 'You are now friends.',
+                                timeout: 3000
+                            })
                             this.loading = false
                     })
                 this.loading = false
@@ -56,6 +68,12 @@
                     .then( (r) => {
                         if(r.data.status == 0)
                             this.status = 0
+                            noty({
+                                type: 'warning',
+                                layout: 'bottomLeft',
+                                text: 'Friend has removed.',
+                                timeout: 3000
+                            })
                             this.loading = false
                     })
                 this.loading = false

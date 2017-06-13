@@ -785,7 +785,7 @@ window.Vue = __webpack_require__(37);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', __webpack_require__(34));
+Vue.component('friendbutton', __webpack_require__(34));
 
 var app = new Vue({
   el: '#app'
@@ -1658,12 +1658,73 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
-        console.log('Component mounted.');
+        var _this = this;
+
+        axios.get('http://localhost/lv/riset/socmed/public/friendships/check/' + this.current_user_id + '/' + this.profile_user_id).then(function (resp) {
+            console.log(resp);
+            _this.status = resp.data.status;
+            _this.loading = false;
+        });
+    },
+
+    props: ['current_user_id', 'profile_user_id'],
+    data: function data() {
+        return {
+            status: '',
+            loading: true
+        };
+    },
+
+    methods: {
+        add_friend: function add_friend() {
+            var _this2 = this;
+
+            this.loading = true;
+            axios.post('http://localhost/lv/riset/socmed/public/friendships/request/' + this.current_user_id + '/' + this.profile_user_id).then(function (r) {
+                if (r.data.status == 'waiting') _this2.status = r.data.status;
+                // noty({
+                //     type: 'success',
+                //     layout: 'bottomLeft',
+                //     text: 'Friend request sent .'
+                // })
+                _this2.loading = false;
+            });
+            this.loading = false;
+        },
+        accept_friend: function accept_friend() {
+            this.loading = true;
+            // this.$http.get('/accept_friend/' + this.profile_user_id )
+            //     .then( (r) => {
+            //         if(r.body == 1)
+            //             this.status = 'friends'
+            //             noty({
+            //                 type: 'success',
+            //                 layout: 'bottomLeft',
+            //                 text: 'You are now friend. Go ahead and hangout .'
+            //             })
+            //             this.loading = false
+            //     })
+            this.loading = false;
+        },
+        remove_friend: function remove_friend() {
+            this.loading = true;
+            this.status = '0';
+            // this.$http.get('/accept_friend/' + this.profile_user_id )
+            //     .then( (r) => {
+            //         if(r.body == 1)
+            //             this.status = 'friends'
+            //             noty({
+            //                 type: 'success',
+            //                 layout: 'bottomLeft',
+            //                 text: 'You are now friend. Go ahead and hangout .'
+            //             })
+            //             this.loading = false
+            //     })
+            this.loading = false;
+        }
     }
 });
 
@@ -31664,9 +31725,9 @@ var Component = __webpack_require__(35)(
   /* cssModules */
   null
 )
-Component.options.__file = "/home/nafiesl/www/lv/riset/socmed/resources/assets/js/components/Example.vue"
+Component.options.__file = "/home/nafiesl/www/lv/riset/socmed/resources/assets/js/components/FriendButton.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Example.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] FriendButton.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -31675,9 +31736,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5d3b5841", Component.options)
+    hotAPI.createRecord("data-v-81837fae", Component.options)
   } else {
-    hotAPI.reload("data-v-5d3b5841", Component.options)
+    hotAPI.reload("data-v-81837fae", Component.options)
   }
 })()}
 
@@ -31746,27 +31807,34 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "container"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Example Component")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n                    I'm an example component!\n                ")])])])])])
-}]}
+  return _c('div', [(_vm.loading) ? _c('p', {
+    staticClass: "text-center"
+  }, [_vm._v("\n        Loading...\n    ")]) : _vm._e(), _vm._v(" "), (!_vm.loading) ? _c('p', {
+    staticClass: "text-center"
+  }, [(_vm.status == 0) ? _c('button', {
+    staticClass: "btn btn-success",
+    on: {
+      "click": _vm.add_friend
+    }
+  }, [_vm._v("Add Friend")]) : _vm._e(), _vm._v(" "), (_vm.status == 'pending') ? _c('button', {
+    staticClass: "btn btn-success",
+    on: {
+      "click": _vm.accept_friend
+    }
+  }, [_vm._v("Accept Friend")]) : _vm._e(), _vm._v(" "), (_vm.status == 'waiting') ? _c('span', {
+    staticClass: "text-success"
+  }, [_vm._v("Waiting for response")]) : _vm._e(), _vm._v(" "), (_vm.status == 'friends') ? _c('button', {
+    staticClass: "btn btn-success",
+    on: {
+      "click": _vm.remove_friend
+    }
+  }, [_vm._v("Remove Friend")]) : _vm._e()]) : _vm._e()])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-5d3b5841", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-81837fae", module.exports)
   }
 }
 

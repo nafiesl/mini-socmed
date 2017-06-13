@@ -8,8 +8,9 @@ use App\User;
 /**
 * Friendable Trait
 */
-trait Friendable {
-    public function addFriend(User $user)
+trait Friendable
+{
+    public function request(User $user)
     {
         $friendship = Friendship::create([
             'requester_id' => $this->id,
@@ -27,7 +28,7 @@ trait Friendable {
         return !! $friendship;
     }
 
-    public function acceptFriend(User $user)
+    public function accept(User $user)
     {
         $friendship = Friendship::where([
             'requester_id' => $user->id,

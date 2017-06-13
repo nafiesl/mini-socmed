@@ -19,6 +19,7 @@ class CreateFriendshipsTable extends Migration
             $table->unsignedInteger('requested_id');
             $table->boolean('approved')->unsigned()->default(0);
             $table->timestamps();
+            $table->unique(['requester_id', 'requested_id']);
         });
     }
 

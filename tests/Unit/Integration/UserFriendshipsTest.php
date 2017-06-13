@@ -68,4 +68,18 @@ class UserFriendshipsTest extends TestCase
         $this->assertCount(1, $users[1]->friends());
         $this->assertCount(1, $users[2]->friends());
     }
+
+    /** @test */
+    public function user_can_remove_a_friend()
+    {
+        $users = factory(User::class, 2)->create();
+        $users[0]->request($users[1]);
+
+        $users[1]->accept($users[0]);
+        $users[0]->remove($users[1]);
+
+        $this->assertFalse($users[0]->isFriendWith($users[1]));
+        $this->assertFalse($users[1]->isFriendWith($users[0]));
+        $this->assertFalse($users[0]->remove($users[1]));
+    }
 }

@@ -105,4 +105,31 @@ trait Friendable
         $friendIds = array_merge($requestedFriendIds, $approvedFriendIds);
         return User::whereIn('id', $friendIds)->get();
     }
+
+    public function remove(User $user)
+    {
+        $friendship = Friendship::where([
+            'requester_id' => $this->id,
+            'requested_id' => $user->id,
+            'approved' => 1,
+        ])->first();
+
+        if ($friendship) {
+            $friendship->delete();
+            return true;
+        }
+
+        $friendship = Friendship::where([
+            'requester_id' => $user->id,
+            'requested_id' => $this->id,
+            'approved' => 1,
+        ])->first();
+
+        if ($friendship) {
+            $friendship->delete();
+            return true;
+        }
+
+        return false;
+    }
 }

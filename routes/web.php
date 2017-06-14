@@ -26,4 +26,5 @@ Route::post('friendships/request/{userId}/{friendId}', 'FriendshipsController@re
 Route::post('friendships/accept/{userId}/{friendId}', 'FriendshipsController@accept')->name('friendships.accept');
 Route::post('friendships/remove/{userId}/{friendId}', 'FriendshipsController@remove')->name('friendships.remove');
 
+Route::get('/notifications', 'NotificationsController@index')->name('notifications.index');
 Route::get('/notifications/unread', 'NotificationsController@unread')->name('notifications.unread');

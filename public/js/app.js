@@ -21809,6 +21809,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var baseURL = document.head.querySelector('meta[name="base-url"]').content;
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
+        $('#unread-notif-link').attr('href', baseURL + '/notifications');
         this.getUnreadNotifications();
     },
 
@@ -46862,6 +46863,7 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('li', [_c('a', {
     attrs: {
+      "id": "unread-notif-link",
       "href": "#"
     }
   }, [_vm._v("\n        Unread "), _c('span', {

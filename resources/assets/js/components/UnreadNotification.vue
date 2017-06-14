@@ -1,6 +1,6 @@
 <template>
     <li>
-        <a href="#">
+        <a id="unread-notif-link" href="#">
             Unread <span class="badge">{{ allNotificationsCount }}</span>
         </a>
     </li>
@@ -10,6 +10,7 @@
     let baseURL = document.head.querySelector('meta[name="base-url"]').content;
     export default {
         mounted () {
+            $('#unread-notif-link').attr('href', baseURL + '/notifications');
             this.getUnreadNotifications()
         },
         methods: {

@@ -28,6 +28,13 @@ class FriendshipsController extends Controller
     {
         $currentUser = User::findOrFail($currentUserId);
         $friendUser = User::findOrFail($friendUserId);
+
+        if ($friendUser->hasRequestedAsFriend($currentUser)) {
+            $currentUser->accept($friendUser);
+            $friendUser->notify(new AcceptRequest($currentUser));
+            return ['status' => 'friends'];
+        }
+
         $currentUser->request($friendUser);
 
         $friendUser->notify(new NewRequest($currentUser));

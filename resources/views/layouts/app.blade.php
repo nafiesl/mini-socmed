@@ -38,6 +38,9 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li><a href="{{ route('users.index') }}">Users</a></li>
+                        @if (Auth::check())
+                        <unreadnotif></unreadnotif>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -77,6 +80,11 @@
             @if (auth()->check())
             <notification :id="{{ auth()->id() }}"></notification>
             @endif
+            <audio id="noty_audio">
+                <source src="{{ asset('audio/notify.mp3') }}">
+                <source src="{{ asset('audio/notify.ogg') }}">
+                <source src="{{ asset('audio/notify.wav') }}">
+            </audio>
         </div>
     </div>
 

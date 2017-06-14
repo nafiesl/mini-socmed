@@ -7,6 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="base-url" content="{{ url('/') }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -73,6 +74,9 @@
 
         <div class="container">
             @yield('content')
+            @if (auth()->check())
+            <notification :id="{{ auth()->id() }}"></notification>
+            @endif
         </div>
     </div>
 

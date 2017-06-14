@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\Friendships\AcceptRequest;
+use App\Notifications\Friendships\NewRequest;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -28,6 +30,8 @@ class FriendshipsController extends Controller
         $friendUser = User::findOrFail($friendUserId);
         $currentUser->request($friendUser);
 
+        $friendUser->notify(new NewRequest($currentUser));
+
         return ['status' => 'waiting'];
     }
 
@@ -36,6 +40,8 @@ class FriendshipsController extends Controller
         $currentUser = User::findOrFail($currentUserId);
         $friendUser = User::findOrFail($friendUserId);
         $currentUser->accept($friendUser);
+
+        $friendUser->notify(new AcceptRequest($currentUser));
 
         return ['status' => 'friends'];
     }

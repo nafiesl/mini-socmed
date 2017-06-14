@@ -9,7 +9,9 @@
             <div class="panel-body">
                 <label>Email:</label>
                 <p>{{ $user->email }}</p>
+                @if (auth()->check())
                 <friendbutton :profile_user_id="{{ $user->id }}" :current_user_id="{{ auth()->id() }}"></friendbutton>
+                @endif
             </div>
         </div>
     </div>

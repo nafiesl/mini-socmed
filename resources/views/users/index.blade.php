@@ -11,7 +11,7 @@
         <div class="panel-body">
             <label>Email:</label>
             <p>{{ $user->email }}</p>
-            <a href="{{ route('users.show', $user->id) }}" class="btn btn-info">View Profile</a>
+            <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-xs">View Profile</a>
         </div>
     </div>
 </div>

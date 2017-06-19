@@ -15,13 +15,13 @@ class FriendshipsController extends Controller
         $friendUser = User::findOrFail($friendUserId);
 
         if ($currentUser->isFriendWith($friendUser))
-            return ['status' => 'friends'];
+            return response()->json(['status' => 'friends'], 200);
         if ($currentUser->hasRequestedAsFriend($friendUser))
-            return ['status' => 'waiting'];
+            return response()->json(['status' => 'waiting'], 200);
         if ($friendUser->hasRequestedAsFriend($currentUser))
-            return ['status' => 'pending'];
+            return response()->json(['status' => 'pending'], 200);
 
-        return ['status' => 0];
+        return response()->json(['status' => 0], 200);
     }
 
     public function request($currentUserId, $friendUserId)
@@ -39,7 +39,7 @@ class FriendshipsController extends Controller
 
         $friendUser->notify(new NewRequest($currentUser));
 
-        return ['status' => 'waiting'];
+        return response()->json(['status' => 'waiting'], 201);
     }
 
     public function accept($currentUserId, $friendUserId)

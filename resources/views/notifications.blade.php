@@ -11,7 +11,7 @@
                     <ul class="list-group">
                         @foreach($notifications as $notif)
                         <li class="list-group-item">
-                            {{ $notif->data['message'] }}
+                            <a href="{{ route('users.show', $notif->data['notifier_user_id']) }}">{{ $notif->data['name'] }}</a> {{ $notif->data['message'] }}
                             <span class="pull-right">{{ $notif->created_at->diffForHumans() }}</span>
                         </li>
                         @endforeach

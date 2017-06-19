@@ -58,8 +58,9 @@ class AcceptRequest extends Notification
     public function toArray($notifiable)
     {
         return [
-            'name' => $this->user->name,
-            'message' => $this->user->name . ' has accept your friend request.',
+            'name'             => $this->user->name,
+            'message'          => ' has accept your friend request.',
+            'notifier_user_id' => $this->user->id,
         ];
     }
 }

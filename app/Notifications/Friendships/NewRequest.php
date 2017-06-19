@@ -58,8 +58,9 @@ class NewRequest extends Notification
     public function toArray($notifiable)
     {
         return [
-            'name' => $this->user->name,
-            'message' => $this->user->name . ' has sent new friend request.',
+            'name'             => $this->user->name,
+            'message'          => ' has sent new friend request.',
+            'notifier_user_id' => $this->user->id,
         ];
     }
 }

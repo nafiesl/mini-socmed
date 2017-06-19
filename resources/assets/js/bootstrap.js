@@ -21,6 +21,8 @@ try {
 
 window.axios = require('axios');
 
+let apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
+window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

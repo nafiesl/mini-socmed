@@ -21,10 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/users', 'UsersController@index')->name('users.index');
 Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 
-Route::get('friendships/check/{userId}/{friendId}', 'FriendshipsController@check')->name('friendships.check');
-Route::post('friendships/request/{userId}/{friendId}', 'FriendshipsController@request')->name('friendships.request');
-Route::post('friendships/accept/{userId}/{friendId}', 'FriendshipsController@accept')->name('friendships.accept');
-Route::post('friendships/remove/{userId}/{friendId}', 'FriendshipsController@remove')->name('friendships.remove');
-
 Route::get('/notifications', 'NotificationsController@index')->name('notifications.index');
 Route::get('/notifications/unread', 'NotificationsController@unread')->name('notifications.unread');

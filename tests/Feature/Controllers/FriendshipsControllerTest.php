@@ -16,21 +16,29 @@ class FriendshipsControllerTest extends TestCase
     {
         $user1 = factory(User::class)->create();
         $user2 = factory(User::class)->create();
-        $response = $this->get(route('friendships.check', [$user1->id, $user2->id]));
+        $response = $this->getJson(route('api.friendships.check', [$user1->id, $user2->id]), [
+            'Authorization' => 'Bearer ' . $user1->api_token
+        ]);
         $response->assertStatus(200);
         $response->assertExactJson(['status' => 0]);
 
         $user1->request($user2);
-        $response = $this->get(route('friendships.check', [$user1->id, $user2->id]));
+        $response = $this->getJson(route('api.friendships.check', [$user1->id, $user2->id]), [
+            'Authorization' => 'Bearer ' . $user1->api_token
+        ]);
         $response->assertStatus(200);
         $response->assertExactJson(['status' => 'waiting']);
 
-        $response = $this->get(route('friendships.check', [$user2->id, $user1->id]));
+        $response = $this->getJson(route('api.friendships.check', [$user2->id, $user1->id]), [
+            'Authorization' => 'Bearer ' . $user1->api_token
+        ]);
         $response->assertStatus(200);
         $response->assertExactJson(['status' => 'pending']);
 
         $user2->accept($user1);
-        $response = $this->get(route('friendships.check', [$user1->id, $user2->id]));
+        $response = $this->getJson(route('api.friendships.check', [$user1->id, $user2->id]), [
+            'Authorization' => 'Bearer ' . $user1->api_token
+        ]);
         $response->assertStatus(200);
         $response->assertExactJson(['status' => 'friends']);
     }
@@ -42,7 +50,9 @@ class FriendshipsControllerTest extends TestCase
         $user1 = factory(User::class)->create();
         $user2 = factory(User::class)->create();
 
-        $response = $this->post(route('friendships.request', [$user2->id, $user1->id]));
+        $response = $this->postJson(route('api.friendships.request', [$user2->id, $user1->id]), [], [
+            'Authorization' => 'Bearer ' . $user2->api_token
+        ]);
         $response->assertStatus(201);
         $response->assertExactJson(['status' => 'waiting']);
 
@@ -66,7 +76,9 @@ class FriendshipsControllerTest extends TestCase
 
         $user1->request($user2);
 
-        $response = $this->post(route('friendships.accept', [$user2->id, $user1->id]));
+        $response = $this->postJson(route('api.friendships.accept', [$user2->id, $user1->id]), [], [
+            'Authorization' => 'Bearer ' . $user1->api_token
+        ]);
         $response->assertStatus(200);
         $response->assertExactJson(['status' => 'friends']);
 
@@ -90,7 +102,9 @@ class FriendshipsControllerTest extends TestCase
         $user1->request($user2);
         $user2->accept($user1);
 
-        $response = $this->post(route('friendships.remove', [$user2->id, $user1->id]));
+        $response = $this->postJson(route('api.friendships.remove', [$user2->id, $user1->id]), [], [
+            'Authorization' => 'Bearer ' . $user2->api_token
+        ]);
         $response->assertStatus(200);
         $response->assertExactJson(['status' => 0]);
 

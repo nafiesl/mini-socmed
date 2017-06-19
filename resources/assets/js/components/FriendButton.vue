@@ -16,7 +16,7 @@
     let baseURL = document.head.querySelector('meta[name="base-url"]').content;
     export default {
         mounted() {
-            axios.get(baseURL + '/friendships/check/' + this.current_user_id + '/' + this.profile_user_id )
+            axios.get(baseURL + '/api/friendships/check/' + this.current_user_id + '/' + this.profile_user_id )
                 .then( (resp) => {
                     console.log(resp)
                     this.status = resp.data.status
@@ -33,7 +33,7 @@
         methods: {
             add_friend() {
                 this.loading = true
-                axios.post(baseURL + '/friendships/request/' + this.current_user_id + '/' + this.profile_user_id )
+                axios.post(baseURL + '/api/friendships/request/' + this.current_user_id + '/' + this.profile_user_id )
                     .then( (r) => {
                         if(r.data.status == 'waiting')
                             this.status = r.data.status
@@ -49,7 +49,7 @@
             },
             accept_friend() {
                 this.loading = true
-                axios.post(baseURL + '/friendships/accept/' + this.current_user_id + '/' + this.profile_user_id )
+                axios.post(baseURL + '/api/friendships/accept/' + this.current_user_id + '/' + this.profile_user_id )
                     .then( (r) => {
                         if(r.data.status == 'friends')
                             this.status = 'friends'
@@ -65,7 +65,7 @@
             },
             remove_friend() {
                 this.loading = true
-                axios.post(baseURL + '/friendships/remove/' + this.current_user_id + '/' + this.profile_user_id )
+                axios.post(baseURL + '/api/friendships/remove/' + this.current_user_id + '/' + this.profile_user_id )
                     .then( (r) => {
                         if(r.data.status == 0)
                             this.status = 0

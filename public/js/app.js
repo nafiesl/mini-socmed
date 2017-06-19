@@ -21689,7 +21689,7 @@ var baseURL = document.head.querySelector('meta[name="base-url"]').content;
     mounted: function mounted() {
         var _this = this;
 
-        axios.get(baseURL + '/friendships/check/' + this.current_user_id + '/' + this.profile_user_id).then(function (resp) {
+        axios.get(baseURL + '/api/friendships/check/' + this.current_user_id + '/' + this.profile_user_id).then(function (resp) {
             console.log(resp);
             _this.status = resp.data.status;
             _this.loading = false;
@@ -21709,7 +21709,7 @@ var baseURL = document.head.querySelector('meta[name="base-url"]').content;
             var _this2 = this;
 
             this.loading = true;
-            axios.post(baseURL + '/friendships/request/' + this.current_user_id + '/' + this.profile_user_id).then(function (r) {
+            axios.post(baseURL + '/api/friendships/request/' + this.current_user_id + '/' + this.profile_user_id).then(function (r) {
                 if (r.data.status == 'waiting') _this2.status = r.data.status;
                 noty({
                     type: 'information',
@@ -21725,7 +21725,7 @@ var baseURL = document.head.querySelector('meta[name="base-url"]').content;
             var _this3 = this;
 
             this.loading = true;
-            axios.post(baseURL + '/friendships/accept/' + this.current_user_id + '/' + this.profile_user_id).then(function (r) {
+            axios.post(baseURL + '/api/friendships/accept/' + this.current_user_id + '/' + this.profile_user_id).then(function (r) {
                 if (r.data.status == 'friends') _this3.status = 'friends';
                 noty({
                     type: 'success',
@@ -21741,7 +21741,7 @@ var baseURL = document.head.querySelector('meta[name="base-url"]').content;
             var _this4 = this;
 
             this.loading = true;
-            axios.post(baseURL + '/friendships/remove/' + this.current_user_id + '/' + this.profile_user_id).then(function (r) {
+            axios.post(baseURL + '/api/friendships/remove/' + this.current_user_id + '/' + this.profile_user_id).then(function (r) {
                 if (r.data.status == 0) _this4.status = 0;
                 noty({
                     type: 'warning',
@@ -21862,6 +21862,8 @@ try {
 
 window.axios = __webpack_require__(13);
 
+var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
+window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + apiToken;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

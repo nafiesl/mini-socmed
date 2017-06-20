@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        notifications: []
+        notifications: [],
+        posts: []
     },
     getters: {
         allNotifications(state) {
@@ -13,11 +14,17 @@ export const store = new Vuex.Store({
         },
         allNotificationsCount(state) {
             return state.notifications.length
+        },
+        allPosts(state) {
+            return state.posts
         }
     },
     mutations: {
         addNotification(state, notif) {
             state.notifications.push(notif)
+        },
+        addPost(state, post) {
+            state.posts.unshift(post)
         }
     }
 })

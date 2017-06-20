@@ -19,6 +19,8 @@ window.Vue = require('vue');
 Vue.component('friendbutton', require('./components/FriendButton.vue'));
 Vue.component('notification', require('./components/Notification.vue'));
 Vue.component('unreadnotif', require('./components/UnreadNotification.vue'));
+Vue.component('post', require('./components/Post.vue'));
+Vue.component('feed', require('./components/Feed.vue'));
 
 import { store } from './store';
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\Posts\PostGotLiked;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class LikesController extends Controller
         }
 
         $user->like($post);
+        $post->user->notify(new PostGotLiked($post, $user));
         return response()->json(['id' => $user->id, 'name' => $user->name], 201);
     }
 }

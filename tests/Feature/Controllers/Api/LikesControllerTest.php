@@ -5,6 +5,7 @@ namespace Tests\Feature\Controllers\Api;
 use App\Post;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Notification;
 use Tests\TestCase;
 
 class LikesControllerTest extends TestCase
@@ -14,6 +15,8 @@ class LikesControllerTest extends TestCase
     /** @test */
     public function user_can_like_a_post()
     {
+        Notification::fake();
+
         $user = factory(User::class)->create();
         $post = factory(Post::class)->create();
 
@@ -29,6 +32,16 @@ class LikesControllerTest extends TestCase
             'post_id' => $post->id,
             'user_id' => $user->id,
         ]);
+
+        Notification::assertSentTo(
+            [$post->user], 'App\Notifications\Posts\PostGotLiked'
+        );
+
+        // $this->assertDatabaseHas('notifications', [
+        //     'type'            => 'App\Notifications\Posts\PostGotLiked',
+        //     'notifiable_id'   => $post->user->id,
+        //     'notifiable_type' => 'App\User',
+        // ]);
     }
 
     /** @test */

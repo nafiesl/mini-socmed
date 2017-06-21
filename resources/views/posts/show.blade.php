@@ -8,7 +8,9 @@
             <div class="panel-body">
                 {{ $post->content }}
             </div>
-            <like :post="{{ $post }}" :current_user_id="{{ auth()->id() }}"></like>
+            <div class="panel-footer">
+                <like :post="{{ $post }}" :current_user_id="{{ auth()->id() }}"></like>
+            </div>
         </div>
     </div>
 </div>

@@ -21689,6 +21689,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 var baseURL = document.head.querySelector('meta[name="base-url"]').content;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -21825,6 +21827,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var baseURL = document.head.querySelector('meta[name="base-url"]').content;
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {},
+    data: function data() {
+        return {
+            disableLike: false
+        };
+    },
 
     props: ['post', 'current_user_id'],
     computed: {
@@ -21849,15 +21856,19 @@ var baseURL = document.head.querySelector('meta[name="base-url"]').content;
         like: function like(post) {
             var _this = this;
 
+            this.disableLike = true;
             axios.post(baseURL + '/api/like/' + post.id).then(function (response) {
                 _this.$store.commit('addLikeToPost', { post: post, user: response.data });
+                _this.disableLike = false;
             });
         },
         unlike: function unlike(post) {
             var _this2 = this;
 
+            this.disableLike = true;
             axios.post(baseURL + '/api/like/' + post.id).then(function (response) {
                 _this2.$store.commit('removeLikeFromPost', { post: post, user: response.data });
+                _this2.disableLike = false;
             });
         }
     }
@@ -47166,10 +47177,11 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "panel-footer"
-  }, [(_vm.currentUserIsLiker) ? _c('button', {
+  return _c('span', [(_vm.currentUserIsLiker) ? _c('button', {
     staticClass: "btn btn-danger btn-xs",
+    attrs: {
+      "disabled": _vm.disableLike
+    },
     on: {
       "click": function($event) {
         _vm.unlike(_vm.post)
@@ -47177,6 +47189,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Unlike")]) : _c('button', {
     staticClass: "btn btn-success btn-xs",
+    attrs: {
+      "disabled": _vm.disableLike
+    },
     on: {
       "click": function($event) {
         _vm.like(_vm.post)
@@ -47306,7 +47321,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-lg-10 col-lg-offset-1"
+    staticClass: "col-lg-8 col-lg-offset-2"
   }, _vm._l((_vm.posts), function(post) {
     return _c('div', {
       staticClass: "panel panel-default"
@@ -47318,12 +47333,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "panel-title"
     }, [_vm._v(_vm._s(post.user.name))])]), _vm._v(" "), _c('div', {
       staticClass: "panel-body"
-    }, [_vm._v("\n                " + _vm._s(post.content) + "\n            ")]), _vm._v(" "), _c('like', {
+    }, [_vm._v("\n                " + _vm._s(post.content) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "panel-footer"
+    }, [_c('like', {
       attrs: {
         "post": post,
         "current_user_id": _vm.current_user_id
       }
-    })], 1)
+    })], 1)])
   }))])
 },staticRenderFns: []}
 module.exports.render._withStripped = true

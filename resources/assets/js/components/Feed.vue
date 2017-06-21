@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-lg-10 col-lg-offset-1">
+        <div class="col-lg-8 col-lg-offset-2">
             <div class="panel panel-default" v-for="post in posts">
                 <div class="panel-heading">
                     <small class="pull-right">{{ post.published }}</small>
@@ -9,7 +9,9 @@
                 <div class="panel-body">
                     {{ post.content }}
                 </div>
-                <like :post="post" :current_user_id="current_user_id"></like>
+                <div class="panel-footer">
+                    <like :post="post" :current_user_id="current_user_id"></like>
+                </div>
             </div>
         </div>
     </div>

@@ -1,5 +1,8 @@
 <?php
 
+use App\Post;
+use App\User;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -12,7 +15,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -21,5 +24,15 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'password'       => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
         'api_token'      => str_random(40),
+    ];
+});
+
+$factory->define(Post::class, function (Faker\Generator $faker) {
+
+    return [
+        'user_id' => function () {
+            return factory(User::class)->create()->id;
+        },
+        'content' => $faker->sentences(2, true),
     ];
 });

@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => 'auth:api', 'as' => 'api.'], function () {
+Route::group(['middleware' => 'auth:api', 'as' => 'api.', 'namespace' => 'Api'], function () {
     /**
      * Friendship Routes
      */
@@ -12,11 +12,11 @@ Route::group(['middleware' => 'auth:api', 'as' => 'api.'], function () {
     /**
      * Post Routes
      */
-    Route::resource('posts', 'Api\PostsController', ['except' => ['show', 'edit']]);
+    Route::resource('posts', 'PostsController', ['except' => ['show', 'edit']]);
 
     /**
      * Like Routes
      */
-    Route::post('like/{post}', 'Api\LikesController@like');
-    Route::post('unlike/{post}', 'Api\LikesController@unlike');
+    Route::post('like/{post}', ['as' => 'like', 'uses' => 'LikesController@like']);
+    Route::post('unlike/{post}', ['as' => 'unlike', 'uses' => 'LikesController@unlike']);
 });

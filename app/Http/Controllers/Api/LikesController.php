@@ -19,7 +19,11 @@ class LikesController extends Controller
         }
 
         $user->like($post);
-        $post->user->notify(new PostGotLiked($post, $user));
+
+        if ($post->user_id != $user->id) {
+            $post->user->notify(new PostGotLiked($post, $user));
+        }
+
         return response()->json(['id' => $user->id, 'name' => $user->name], 201);
     }
 }

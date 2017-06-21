@@ -21703,9 +21703,7 @@ var baseURL = document.head.querySelector('meta[name="base-url"]').content;
             var _this = this;
 
             axios.get(baseURL + '/api/posts').then(function (response) {
-                response.data.forEach(function (post) {
-                    _this.$store.commit('addPost', post);
-                });
+                _this.$store.commit('pushPosts', response.data);
             });
         }
     },
@@ -21823,9 +21821,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 var baseURL = document.head.querySelector('meta[name="base-url"]').content;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -21855,12 +21850,6 @@ var baseURL = document.head.querySelector('meta[name="base-url"]').content;
             var _this = this;
 
             axios.post(baseURL + '/api/like/' + post.id).then(function (response) {
-                noty({
-                    type: 'information',
-                    layout: 'bottomLeft',
-                    text: 'You liked this post.',
-                    timeout: 3000
-                });
                 _this.$store.commit('addLikeToPost', { post: post, user: response.data });
             });
         },
@@ -21868,12 +21857,6 @@ var baseURL = document.head.querySelector('meta[name="base-url"]').content;
             var _this2 = this;
 
             axios.post(baseURL + '/api/like/' + post.id).then(function (response) {
-                noty({
-                    type: 'warning',
-                    layout: 'bottomLeft',
-                    text: 'You unliked this post.',
-                    timeout: 3000
-                });
                 _this2.$store.commit('removeLikeFromPost', { post: post, user: response.data });
             });
         }
@@ -22359,6 +22342,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
     mutations: {
         addNotification: function addNotification(state, notif) {
             state.notifications.push(notif);
+        },
+        pushPosts: function pushPosts(state, posts) {
+            state.posts = state.posts.concat(posts);
         },
         addPost: function addPost(state, post) {
             state.posts.unshift(post);
@@ -47182,11 +47168,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "panel-footer"
-  }, [(_vm.anyLikers) ? _c('div', [_vm._l((_vm.likers), function(liker) {
-    return _c('span', {
-      staticClass: "badge"
-    }, [_vm._v(_vm._s(liker.id) + " ")])
-  }), _vm._v(" "), _c('br')], 2) : _vm._e(), _vm._v(" "), (_vm.currentUserIsLiker) ? _c('button', {
+  }, [(_vm.currentUserIsLiker) ? _c('button', {
     staticClass: "btn btn-danger btn-xs",
     on: {
       "click": function($event) {
@@ -47200,7 +47182,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.like(_vm.post)
       }
     }
-  }, [_vm._v("Like")])])
+  }, [_vm._v("Like")]), _vm._v(" "), _vm._l((_vm.likers), function(liker) {
+    return _c('span', {
+      staticClass: "badge"
+    }, [_vm._v(_vm._s(liker.id) + " ")])
+  })], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

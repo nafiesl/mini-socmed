@@ -64,4 +64,30 @@ class LikesControllerTest extends TestCase
             'user_id' => $user->id,
         ]);
     }
+
+    /** @test */
+    public function user_dont_get_notification_if_they_like_their_own_post()
+    {
+        Notification::fake();
+
+        $user = factory(User::class)->create();
+        $post = factory(Post::class)->create(['user_id' => $user->id]);
+
+        $response = $this->postJson(route('api.like', $post->id), [], [
+            'Authorization' => 'Bearer ' . $user->api_token
+        ]);
+
+        $this->assertTrue($user->liked($post));
+
+        $response->assertStatus(201);
+
+        $this->assertDatabaseHas('likes', [
+            'post_id' => $post->id,
+            'user_id' => $user->id,
+        ]);
+
+        Notification::assertNotSentTo(
+            [$post->user], 'App\Notifications\Posts\PostGotLiked'
+        );
+    }
 }

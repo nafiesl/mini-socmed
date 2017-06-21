@@ -14,7 +14,7 @@ class PostsController extends Controller
         $userIds = $user->friends()->pluck('id');
         $userIds[] = $user->id;
 
-        return Post::whereIn('user_id', $userIds)->get();
+        return Post::whereIn('user_id', $userIds)->latest()->get();
     }
 
     public function store(Request $request)

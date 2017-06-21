@@ -27,9 +27,7 @@
             getFeed() {
                 axios.get(baseURL + '/api/posts')
                     .then((response) => {
-                        response.data.forEach((post) => {
-                            this.$store.commit('addPost', post)
-                        })
+                        this.$store.commit('pushPosts', response.data)
                     })
             }
         },

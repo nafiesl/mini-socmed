@@ -1,11 +1,8 @@
 <template>
     <div class="panel-footer">
-        <div v-if="anyLikers">
-            <span class="badge" v-for="liker in likers">{{ liker.id }} </span>
-            <br>
-        </div>
         <button class="btn btn-danger btn-xs" v-if="currentUserIsLiker" @click="unlike(post)">Unlike</button>
         <button class="btn btn-success btn-xs" v-else @click="like(post)">Like</button>
+        <span class="badge" v-for="liker in likers">{{ liker.id }} </span>
     </div>
 </template>
 
@@ -40,24 +37,12 @@
             like(post) {
                 axios.post(baseURL + '/api/like/' + post.id)
                     .then((response) => {
-                        noty({
-                            type: 'information',
-                            layout: 'bottomLeft',
-                            text: 'You liked this post.',
-                            timeout: 3000
-                        })
                         this.$store.commit('addLikeToPost', {post: post, user: response.data});
                     })
             },
             unlike(post) {
                 axios.post(baseURL + '/api/like/' + post.id)
                     .then((response) => {
-                        noty({
-                            type: 'warning',
-                            layout: 'bottomLeft',
-                            text: 'You unliked this post.',
-                            timeout: 3000
-                        })
                         this.$store.commit('removeLikeFromPost', {post: post, user: response.data});
                     })
             }

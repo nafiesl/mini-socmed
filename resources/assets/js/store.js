@@ -25,6 +25,13 @@ export const store = new Vuex.Store({
         },
         addPost(state, post) {
             state.posts.unshift(post)
+        },
+        addLikeToPost(state, payload) {
+            payload.post.likers.push(payload.user)
+        },
+        removeLikeFromPost(state, payload) {
+            let likerIndex = payload.post.likers.indexOf(payload.user)
+            payload.post.likers.splice(likerIndex, 1)
         }
     }
 })

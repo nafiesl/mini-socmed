@@ -21767,7 +21767,7 @@ var baseURL = document.head.querySelector('meta[name="base-url"]').content;
                 noty({
                     type: 'information',
                     layout: 'bottomLeft',
-                    text: 'Friend request sent .',
+                    text: 'Friend request sent.',
                     timeout: 3000
                 });
                 _this2.loading = false;
@@ -21824,7 +21824,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
+var baseURL = document.head.querySelector('meta[name="base-url"]').content;
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {},
 
@@ -21832,6 +21835,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         likers: function likers() {
             return this.post.likers;
+        },
+        anyLikers: function anyLikers() {
+            return this.likers.length > 0;
         },
         currentUserIsLiker: function currentUserIsLiker() {
             var likerIds = [];
@@ -21842,6 +21848,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var hasLiked = likerIds.indexOf(this.current_user_id);
 
             if (hasLiked === -1) return false;else return true;
+        }
+    },
+    methods: {
+        like: function like(post) {
+            var _this = this;
+
+            axios.post(baseURL + '/api/like/' + post.id).then(function (response) {
+                noty({
+                    type: 'information',
+                    layout: 'bottomLeft',
+                    text: 'You liked this post.',
+                    timeout: 3000
+                });
+                _this.$store.commit('addLikeToPost', { post: post, user: response.data });
+            });
+        },
+        unlike: function unlike(post) {
+            var _this2 = this;
+
+            axios.post(baseURL + '/api/like/' + post.id).then(function (response) {
+                noty({
+                    type: 'warning',
+                    layout: 'bottomLeft',
+                    text: 'You unliked this post.',
+                    timeout: 3000
+                });
+                _this2.$store.commit('removeLikeFromPost', { post: post, user: response.data });
+            });
         }
     }
 });
@@ -22328,6 +22362,13 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
         },
         addPost: function addPost(state, post) {
             state.posts.unshift(post);
+        },
+        addLikeToPost: function addLikeToPost(state, payload) {
+            payload.post.likers.push(payload.user);
+        },
+        removeLikeFromPost: function removeLikeFromPost(state, payload) {
+            var likerIndex = payload.post.likers.indexOf(payload.user);
+            payload.post.likers.splice(likerIndex, 1);
         }
     }
 });
@@ -47141,15 +47182,25 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "panel-footer"
-  }, [_vm._l((_vm.likers), function(liker) {
+  }, [(_vm.anyLikers) ? _c('div', [_vm._l((_vm.likers), function(liker) {
     return _c('span', {
       staticClass: "badge"
     }, [_vm._v(_vm._s(liker.id) + " ")])
-  }), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.currentUserIsLiker) ? _c('button', {
-    staticClass: "btn btn-danger btn-xs"
+  }), _vm._v(" "), _c('br')], 2) : _vm._e(), _vm._v(" "), (_vm.currentUserIsLiker) ? _c('button', {
+    staticClass: "btn btn-danger btn-xs",
+    on: {
+      "click": function($event) {
+        _vm.unlike(_vm.post)
+      }
+    }
   }, [_vm._v("Unlike")]) : _c('button', {
-    staticClass: "btn btn-success btn-xs"
-  }, [_vm._v("Like")])], 2)
+    staticClass: "btn btn-success btn-xs",
+    on: {
+      "click": function($event) {
+        _vm.like(_vm.post)
+      }
+    }
+  }, [_vm._v("Like")])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

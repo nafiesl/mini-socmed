@@ -12,5 +12,11 @@ Route::group(['middleware' => 'auth:api', 'as' => 'api.'], function () {
     /**
      * Post Routes
      */
-    Route::resource('posts', 'Api\PostsController');
+    Route::resource('posts', 'Api\PostsController', ['except' => ['show', 'edit']]);
+
+    /**
+     * Like Routes
+     */
+    Route::post('like/{post}', 'Api\LikesController@like');
+    Route::post('unlike/{post}', 'Api\LikesController@unlike');
 });

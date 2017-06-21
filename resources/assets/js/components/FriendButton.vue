@@ -40,7 +40,7 @@
                             noty({
                                 type: 'information',
                                 layout: 'bottomLeft',
-                                text: 'Friend request sent .',
+                                text: 'Friend request sent.',
                                 timeout: 3000
                             })
                             this.loading = false

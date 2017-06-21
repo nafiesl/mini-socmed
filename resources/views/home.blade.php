@@ -2,5 +2,5 @@
 
 @section('content')
 <post></post>
-<feed></feed>
+<feed :current_user_id="{{ auth()->id() }}"></feed>
 @endsection

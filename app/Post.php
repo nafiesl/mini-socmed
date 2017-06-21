@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $with = ['user'];
+    protected $with = ['user','likers'];
     protected $appends = ['published'];
     protected $fillable = ['content'];
 
@@ -18,5 +18,10 @@ class Post extends Model
     public function getPublishedAttribute()
     {
         return $this->created_at->diffForHumans();
+    }
+
+    public function likers()
+    {
+        return $this->belongsToMany(User::class, 'likes')->select('users.id','users.name');
     }
 }

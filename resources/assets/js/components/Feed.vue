@@ -9,6 +9,7 @@
                 <div class="panel-body">
                     {{ post.content }}
                 </div>
+                <like :post="post" :current_user_id="current_user_id"></like>
             </div>
         </div>
     </div>
@@ -20,6 +21,8 @@
         mounted() {
             this.getFeed()
         },
+        props: ['current_user_id'],
+        components: ['like'],
         methods: {
             getFeed() {
                 axios.get(baseURL + '/api/posts')
@@ -27,7 +30,6 @@
                         response.data.forEach((post) => {
                             this.$store.commit('addPost', post)
                         })
-                        console.log(response.data)
                     })
             }
         },

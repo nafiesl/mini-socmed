@@ -23,3 +23,4 @@ Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 
 Route::get('/notifications', 'NotificationsController@index')->name('notifications.index');
 Route::get('/notifications/unread', 'NotificationsController@unread')->name('notifications.unread');
+Route::get('/posts/{post}', 'PostsController@show')->name('posts.show');

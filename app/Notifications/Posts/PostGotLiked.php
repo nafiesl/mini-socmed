@@ -62,9 +62,16 @@ class PostGotLiked extends Notification
     {
         return [
             'name'             => $this->liker->name,
-            'message'          => ' likes your post.',
+            'message'          => ' likes your ',
             'notifier_user_id' => $this->liker->id,
             'post_id'          => $this->post->id,
+        ];
+    }
+
+    public function toBroadcast($notifiable)
+    {
+        return [
+            'message' => $this->liker->name.' likes your post.',
         ];
     }
 }

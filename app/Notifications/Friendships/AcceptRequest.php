@@ -63,4 +63,11 @@ class AcceptRequest extends Notification
             'notifier_user_id' => $this->user->id,
         ];
     }
+
+    public function toBroadcast($notifiable)
+    {
+        return [
+            'message' => $this->user->name.' has accept your friend request.',
+        ];
+    }
 }

@@ -47,16 +47,9 @@ if (token) {
 
 import Echo from 'laravel-echo'
 
-window.Pusher = require('pusher-js');
 let baseURL = document.head.querySelector('meta[name="base-url"]').content;
 
 window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: '531d0ecc4a6e5c99ec77',
-    authEndpoint: baseURL + '/broadcasting/auth'
+    broadcaster: 'socket.io',
+    host: window.location.hostname + ':6001'
 });
-
-Pusher.log = function(message)
-{
-    window.console.log(message)
-}

@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<h3 class="page-header">Browse Users</h3>
+<h3 class="page-header">
+    Browse Users
+    @auth
+    <small class="pull-right"><onlineusercounter>Users Online</onlineusercounter></small>
+    @endauth
+</h3>
 
 <div class="row">
 @foreach($users as $user)

@@ -40,10 +40,17 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ route('users.index') }}">Browse Users</a></li>
-                        @if (Auth::check())
+                        <li>
+                            <a href="{{ route('users.index') }}">
+                                Browse Users
+                                @auth
+                                <onlineusercounter></onlineusercounter>
+                                @endauth
+                            </a>
+                        </li>
+                        @auth
                         <unreadnotif></unreadnotif>
-                        @endif
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->

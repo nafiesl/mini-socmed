@@ -22,6 +22,7 @@ Vue.component('unreadnotif', require('./components/UnreadNotification.vue'));
 Vue.component('post', require('./components/Post.vue'));
 Vue.component('feed', require('./components/Feed.vue'));
 Vue.component('like', require('./components/Like.vue'));
+Vue.component('onlineusercounter', require('./components/OnlineUserCounter.vue'));
 
 import { store } from './store';
 

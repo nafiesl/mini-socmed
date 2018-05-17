@@ -2,11 +2,25 @@
 
 <h1 align="center">Media Sosial Mini</h1>
 
->**Development in progress**
-
 ## Tentang
 
 Contoh aplikasi laravel dengan notifikasi realtime menggunakan pusher. Sebagian besar aplikasi ini mengacu pada tutorial berikut : [Social network in laravel 5.3 and vuejs 2.0](https://www.youtube.com/playlist?list=PLZAiN3wmUtzV1eI7mAxERQaE2LkyA5Nh6)
+
+## Demo
+
+| URL | http://mini-socmed.nafies.id/users |
+| --- | --- |
+| email | john@example.net |
+| password | secret |
+
+Untuk mencoba aplikasi demo, silakan:
+1. Buka browser google chrome, dan buka satu tab dengan incognito (bisa juga dengan dua browser berbeda).
+2. [Register](http://mini-socmed.nafies.id/register) dengan nama dan email di satu browser.
+3. Login sebagai **john@example.net** pada browser lainnya.
+4. Pada browser anda mendaftar, buka profil [**John**](http://mini-socmed.nafies.id/users/2), klik tombol **Add Friend**.
+5. Otomatis pada **browser John** akan **mendapatkan notifikasi** suara (tanpa refresh halaman).
+
+Selamat mencoba.
 
 ## Fitur
 
@@ -30,10 +44,15 @@ Contoh aplikasi laravel dengan notifikasi realtime menggunakan pusher. Sebagian 
     - Notifikasi dari pusher
     - Jumlah Unread Notif
 
-## Cara Install
+## Instalasi
+
+### Spesifikasi
+- PHP >=7.0 dan semua extension untuk Laravel 5.5.
+- MySQL.
+- SQlite (untuk `automated testing`).
 
 ### Install Aplikasi
-1. Para terminal, clone repo dengan git `git clone git@github.com:nafiesl/mini-socmed.git`
+1. Para terminal, clone repo dengan git `git clone https://github.com/nafiesl/mini-socmed.git`
 2. `cd mini-socmed`
 3. `cp .env.example .env`
 4. `composer install`
@@ -52,11 +71,11 @@ Contoh aplikasi laravel dengan notifikasi realtime menggunakan pusher. Sebagian 
 3. Pada bagian **Keys**, masukkan `app_id`, `key`, dan `secret` ke file `.env` pada aplikasi laravel.
 4. Pada file `.env` set `BROADCAST_DRIVER=pusher`
 
-Jika ada problem dengan instalasi atau aplikasi, silakan buat `New issue` pada repo ini.
+Jika ada problem dengan instalasi atau aplikasi, silakan buat [**New issue**](https://github.com/nafiesl/mini-socmed/issues) pada repo ini.
 
 ## Testing
 Ingin mencoba testingnya? Silakan ketik perintah pada terminal: `vendor/bin/phpunit`
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](LICENSE).
+Project ini adalah software open source di bawah [Lisensi MIT](LICENSE).
